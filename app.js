@@ -1,12 +1,12 @@
-import { VALUES, METRIC_LABELS, eligible, search, orderByValues, compareRows, metricOf, displayName, isBranch, fourYearCost } from './src/lib/explore.js';
-import { toIcs, isVerified, isAllDay } from './src/lib/ics.js';
-import { CRITERIA, IDEAL_SECONDS, offlineFeedback } from './src/lib/interview.js';
-import { SAMPLE_UNIVERSITIES } from './src/data/universities.js';
-import { SAMPLE_SCHEDULES } from './src/data/schedules.js';
-import { FIELDS, KINDS, questionsFor } from './src/data/questions.js';
-import { convertCsat, isUsableRule } from './src/lib/score.js';
-import { SAMPLE_SCORE_RULES } from './src/data/score-rules.js';
-import { SAMPLE_EXAM_QUESTIONS } from './src/data/exam-questions.js';
+import { VALUES, METRIC_LABELS, eligible, search, orderByValues, compareRows, metricOf, displayName, isBranch, fourYearCost } from './src/lib/explore.js?v=muh3fqur';
+import { toIcs, isVerified, isAllDay } from './src/lib/ics.js?v=muh3fqur';
+import { CRITERIA, IDEAL_SECONDS, offlineFeedback } from './src/lib/interview.js?v=muh3fqur';
+import { SAMPLE_UNIVERSITIES } from './src/data/universities.js?v=muh3fqur';
+import { SAMPLE_SCHEDULES } from './src/data/schedules.js?v=muh3fqur';
+import { FIELDS, KINDS, questionsFor } from './src/data/questions.js?v=muh3fqur';
+import { convertCsat, isUsableRule } from './src/lib/score.js?v=muh3fqur';
+import { SAMPLE_SCORE_RULES } from './src/data/score-rules.js?v=muh3fqur';
+import { SAMPLE_EXAM_QUESTIONS } from './src/data/exam-questions.js?v=muh3fqur';
 
 const $ = id => document.getElementById(id);
 const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
