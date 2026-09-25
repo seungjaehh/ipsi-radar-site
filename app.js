@@ -284,18 +284,18 @@ function renderHistory() {
 // ---------- boot
 async function boot() {
   let status = {};
-  try { status = await (await fetch('./api/status')).json(); } catch {}
+  try { status = await (await fetch('./api/status', { cache: 'no-cache' })).json(); } catch {}
   state.ai = Boolean(status.ai);
   state.static = Boolean(status.static);
   if (status.dataset === 'imported') {
-    try { const r = await fetch('./data/universities.json'); if (r.ok) { state.univs = eligible(await r.json()); state.sample = false; } } catch {}
+    try { const r = await fetch('./data/universities.json', { cache: 'no-cache' }); if (r.ok) { state.univs = eligible(await r.json()); state.sample = false; } } catch {}
   }
   if (!state.univs.length) state.univs = eligible(SAMPLE_UNIVERSITIES);
   // Real data replaces the samples: imported universities never mix with sample schedules, rules or questions.
   if (!state.sample) { state.schedules = []; state.rules = []; state.exams = []; }
   if (status.published) {
     try {
-      const r = await fetch('./data/published.json');
+      const r = await fetch('./data/published.json', { cache: 'no-cache' });
       if (r.ok) {
         const p = await r.json();
         // Verified real data sits next to the samples (sample mode) or replaces nothing (imported mode).
