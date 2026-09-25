@@ -24,6 +24,8 @@ main{max-width:880px;margin:0 auto;padding:16px}
 .value{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 14px;display:flex;align-items:center;gap:8px}
 .value[data-w="0"]{opacity:.75}
 .value:not([data-w="0"]){border-color:var(--accent);background:var(--accent-soft)}
+.value.no-data{opacity:.55}
+.value.no-data small{font-weight:normal;color:var(--muted)}
 .pips{letter-spacing:2px;color:var(--accent);font-size:.8rem}
 .filters{display:grid;grid-template-columns:1fr;gap:8px}
 @media (min-width:640px){.filters{grid-template-columns:2fr 1fr 1fr}}

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="붙을 수 있는 곳보다, 가고 싶은 곳을 찾게 돕는 대학 선택 비서">
 <title>입시 레이더</title>
-<link rel="stylesheet" href="style.css?v=muh4blte">
+<link rel="stylesheet" href="style.css?v=muh5cgtx">
 </head>
 <body>
 <header class="top">
@@ -31,7 +31,7 @@
     <strong>개인정보 안내</strong>
     <ul>
       <li>이름·주민등록번호·주소·학교명은 화면에 표시하지 않고, 아예 읽지 않습니다.</li>
-      <li>파일은 인터넷으로 전송되지 않습니다. 이 브라우저 탭 안에서 pdf.js로 텍스트만 뽑아 바로 처리해요.</li>
+      <li>파일은 인터넷으로 전송되지 않습니다. 이 브라우저 탭 안에서 텍스트를 뽑아 바로 처리해요. 스캔한 이미지 PDF라면 글자 인식(OCR)도 이 안에서 하고, 처음 한 번만 인식 프로그램(약 7MB)을 받습니다. 사진·문서 내용은 어디로도 전송되지 않습니다.</li>
       <li>분석 결과(성적·출결 숫자만)를 "이 기기에 남기기"에 체크하면 브라우저에 저장되고, 언제든 지울 수 있어요. 체크하지 않으면 탭을 닫는 순간 사라집니다.</li>
       <li>미성년자는 보호자와 함께 업로드해 주세요. 성적 분석은 참고용이며, 합격 가능성을 예측하지 않습니다.</li>
     </ul>
@@ -54,6 +54,7 @@
     <p>누르면 중요도가 올라갑니다(0~3). 우리는 대학 순위를 매기지 않고, 고른 기준으로 <em>순서만</em> 바꿔 보여드려요.</p>
   </div>
   <div id="values" class="values" aria-label="중요한 기준"></div>
+  <p id="values-notice" class="banner" hidden></p>
   <div class="filters">
     <input id="q" type="search" placeholder="대학 또는 학과 검색" aria-label="대학 또는 학과 검색">
     <select id="region" aria-label="지역"><option value="">전체 지역</option></select>
@@ -118,6 +119,6 @@
 </main>
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 <footer class="foot">합격 가능성 예측은 하지 않습니다. 모든 일정과 수치는 반드시 대학 공식 공지로 다시 확인하세요.</footer>
-<script type="module" src="app.js?v=muh4blte"></script>
+<script type="module" src="app.js?v=muh5cgtx"></script>
 </body>
 </html>

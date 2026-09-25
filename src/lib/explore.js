@@ -31,6 +31,14 @@ export function metricOf(u, key) {
 export const displayName = u => (u.campus && u.campus !== '본교' ? `${u.name} (${u.campus})` : u.name);
 export const isBranch = u => Boolean(u.campus && u.campus !== '본교');
 
+// 이 기준(value)의 실제 자료가 목록에 몇 곳이나 있는지. 0이면 이 기준을 선택해도 순서가 바뀌지 않는다
+// (모든 학교가 동점 처리되어 가나다순으로 빠짐) — 화면에서 "자료 없음"으로 알려주기 위한 것.
+export function valueCoverage(list, valueId) {
+  const v = VALUES.find(x => x.id === valueId);
+  if (!v) return { withData: 0, total: list.length };
+  return { withData: list.filter(u => metricOf(u, v.metric)).length, total: list.length };
+}
+
 export function search(list, { q = '', region = '', campus = '' } = {}) {
   const needle = q.trim().toLowerCase();
   return eligible(list).filter(u =>

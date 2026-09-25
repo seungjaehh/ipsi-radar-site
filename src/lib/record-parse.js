@@ -11,8 +11,10 @@
 // ---------- 성적 (7. 교과학습발달상황) ----------
 // 실제 표 한 행(예): "국어        국어         4    74/63.8(15.2)     C(318)  4"
 // = 교과 과목 학점수 원점수/과목평균(표준편차) 성취도(수강자수) 석차등급(진로선택과목은 없음)
-const GRADE_ROW = /([가-힣][가-힣·()\/0-9A-Za-z\s]{0,24}?)\s+(\d{1,2})\s+(\d{1,3})\s*\/\s*(\d{1,3}(?:\.\d)?)\s*\(\s*\d{1,2}(?:\.\d)?\s*\)\s*([A-E])\s*\(\s*(\d{1,4})\s*\)\s*(\d)?\s*$/;
-const YEAR_MARK = /\[(\d)\s*학년\s*\]/g;
+// OCR(스캔본)로 읽으면 "B"가 "8"로 잘못 인식되는 경우가 있어 성취도 자리에 8도 허용하고 나중에 B로 되돌린다.
+const GRADE_ROW = /([가-힣][가-힣·()\/0-9A-Za-z\s]{0,24}?)\s+(\d{1,2})\s+(\d{1,3})\s*\/\s*(\d{1,3}(?:\.\d)?)\s*\(\s*\d{1,2}(?:\.\d)?\s*\)\s*([A-E8])\s*\(\s*(\d{1,4})\s*\)\s*(\d)?\s*$/;
+const fixAchievement = a => (a === '8' ? 'B' : a); // OCR이 자주 헷갈리는 자리만 되돌린다
+const YEAR_MARK = /\[\s*(\d)?\s*학년\s*\]/g; // OCR이 앞의 숫자를 놓치면 "[학년]"만 남는다
 
 // 표에는 "교과"와 "과목" 두 칸이 있다. 대부분 같아서("국어 국어") 하나로 줄이고, 다르면
 // ("과학 생명과학I") 실제 과목명(뒤 칸)을 subject로, 교과명(앞 칸)을 category로 따로 둔다.
@@ -24,7 +26,8 @@ function normalizeSubject(raw) {
 function splitByGradeYear(text) {
   const marks = [...text.matchAll(YEAR_MARK)];
   if (!marks.length) return [{ year: null, text }];
-  return marks.map((m, i) => ({ year: Number(m[1]), text: text.slice(m.index, marks[i + 1]?.index ?? text.length) }));
+  // 숫자가 있으면 그 학년으로, OCR이 숫자를 놓쳤으면("[학년]") 나온 순서대로 1,2,3학년으로 본다.
+  return marks.map((m, i) => ({ year: m[1] ? Number(m[1]) : i + 1, text: text.slice(m.index, marks[i + 1]?.index ?? text.length) }));
 }
 
 export function extractGrades(text) {
@@ -41,7 +44,7 @@ export function extractGrades(text) {
       grades.push({
         year, semester: Math.min(semesterIdx, 2), subject, category,
         credit: Number(m[2]), rawScore: Number(m[3]), classAvg: Number(m[4]),
-        achievement: m[5], classSize: Number(m[6]), rank: m[7] ? Number(m[7]) : null,
+        achievement: fixAchievement(m[5]), classSize: Number(m[6]), rank: m[7] ? Number(m[7]) : null,
         confidence: year && m[7] ? 'high' : year ? 'medium' : 'low',
       });
     }
@@ -125,7 +128,9 @@ export function summarizeGrades(grades) {
 // 절대 포함하지 않는 것: 이름, 주민등록번호, 주소, 학교명, 반/번호, 담임 이름. 이 함수는 그런 필드를
 // 만들지 않으며, 입력 텍스트 중 "1. 인적·학적사항" 구간은 아예 읽지 않는다(정규식이 그 절을 대상으로
 // 하지 않음). 테스트(record-parse.test.js)가 실제 형식의 식별정보 섞인 입력으로 이를 고정한다.
-export function analyzeRecordText(text) {
+// ocr: true면 이 텍스트가 (텍스트가 아니라) 스캔 이미지를 문자 인식(OCR)해서 얻은 것이라는 뜻.
+// 글자 인식 자체가 틀릴 수 있어 경고를 하나 더 붙인다.
+export function analyzeRecordText(text, { ocr = false } = {}) {
   const clean = String(text ?? '').replace(/\u0000/g, '');
   const grades = extractGrades(clean);
   const attendance = extractAttendance(clean);
@@ -133,9 +138,10 @@ export function analyzeRecordText(text) {
   const serviceHours = extractServiceHours(clean);
   const summary = summarizeGrades(grades);
   return {
-    grades, attendance, awards, serviceHours, summary,
+    grades, attendance, awards, serviceHours, summary, ocr,
     warnings: [
-      ...(grades.length === 0 ? ['성적 표(교과학습발달상황)를 찾지 못했습니다. 학교생활기록부 PDF가 맞는지, 표가 이미지로 스캔되지 않았는지 확인해 주세요.'] : []),
+      ...(ocr ? ['스캔 이미지에서 글자를 읽어(OCR) 만든 결과라 텍스트 PDF보다 오차가 더 있을 수 있습니다. 반드시 원본과 대조하세요.'] : []),
+      ...(grades.length === 0 ? [`성적 표(교과학습발달상황)를 찾지 못했습니다. 학교생활기록부 PDF가 맞는지 확인해 주세요.${ocr ? ' 스캔 상태가 흐리면 다시 스캔해 보세요.' : ''}`] : []),
       ...(!attendance.found ? ['출결 정보를 찾지 못했습니다.'] : []),
       ...(attendance.years.some(y => !y.perfectAttendance) ? ['개근이 아닌 학년이 있습니다. 정확한 결석·지각 횟수는 원본 PDF에서 직접 확인하세요(자동으로 정확히 세지 못했습니다).'] : []),
       ...(awards.some(a => !a.title) ? ['수상 날짜는 찾았지만 이름과 정확히 짝짓지 못한 항목이 있습니다.'] : []),

@@ -1,13 +1,13 @@
-import { VALUES, METRIC_LABELS, eligible, search, orderByValues, compareRows, metricOf, displayName, isBranch, fourYearCost } from './src/lib/explore.js?v=muh4blte';
-import { toIcs, isVerified, isAllDay } from './src/lib/ics.js?v=muh4blte';
-import { CRITERIA, IDEAL_SECONDS, offlineFeedback } from './src/lib/interview.js?v=muh4blte';
-import { SAMPLE_UNIVERSITIES } from './src/data/universities.js?v=muh4blte';
-import { SAMPLE_SCHEDULES } from './src/data/schedules.js?v=muh4blte';
-import { FIELDS, KINDS, questionsFor } from './src/data/questions.js?v=muh4blte';
-import { convertCsat, isUsableRule } from './src/lib/score.js?v=muh4blte';
-import { SAMPLE_SCORE_RULES } from './src/data/score-rules.js?v=muh4blte';
-import { SAMPLE_EXAM_QUESTIONS } from './src/data/exam-questions.js?v=muh4blte';
-import { analyzeRecordText } from './src/lib/record-parse.js?v=muh4blte';
+import { VALUES, METRIC_LABELS, eligible, search, orderByValues, compareRows, metricOf, displayName, isBranch, fourYearCost, valueCoverage } from './src/lib/explore.js?v=muh5cgtx';
+import { toIcs, isVerified, isAllDay } from './src/lib/ics.js?v=muh5cgtx';
+import { CRITERIA, IDEAL_SECONDS, offlineFeedback } from './src/lib/interview.js?v=muh5cgtx';
+import { SAMPLE_UNIVERSITIES } from './src/data/universities.js?v=muh5cgtx';
+import { SAMPLE_SCHEDULES } from './src/data/schedules.js?v=muh5cgtx';
+import { FIELDS, KINDS, questionsFor } from './src/data/questions.js?v=muh5cgtx';
+import { convertCsat, convertSchool, isUsableRule, SUBJECT_LABELS } from './src/lib/score.js?v=muh5cgtx';
+import { SAMPLE_SCORE_RULES } from './src/data/score-rules.js?v=muh5cgtx';
+import { SAMPLE_EXAM_QUESTIONS } from './src/data/exam-questions.js?v=muh5cgtx';
+import { analyzeRecordText } from './src/lib/record-parse.js?v=muh5cgtx';
 
 const $ = id => document.getElementById(id);
 const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -25,6 +25,7 @@ const state = {
   weights: store.get('weights', { employment: 2, prestige: 1 }),
   targets: store.get('targets', []), compare: store.get('compare', []),
   history: store.get('history', []), question: null, timer: null, startedAt: 0,
+  record: store.get('record', null),
 };
 const save = () => { store.set('weights', state.weights); store.set('targets', state.targets); store.set('compare', state.compare); store.set('history', state.history); };
 const byId = id => state.univs.find(u => u.id === id);
@@ -94,11 +95,14 @@ async function loadPdfJs() {
   return pdfjsLibPromise;
 }
 
-async function extractPdfText(file) {
+// 텍스트가 있는 PDF는 페이지마다 글자가 꽤 많다. 평균 30자 미만이면 스캔한 이미지로 보고 OCR로 넘어간다.
+const SCANNED_CHARS_PER_PAGE = 30;
+
+async function extractPdfPages(file) {
   const pdfjsLib = await loadPdfJs();
   const buf = await file.arrayBuffer();
   const doc = await pdfjsLib.getDocument({ data: buf }).promise;
-  let text = '';
+  const pages = [];
   for (let i = 1; i <= doc.numPages; i++) {
     const page = await doc.getPage(i);
     const content = await page.getTextContent();
@@ -106,22 +110,57 @@ async function extractPdfText(file) {
     // like pdftotext -layout does, so our row-based regex sees the same shape.
     const items = content.items.map(it => ({ str: it.str, x: it.transform[4], y: Math.round(it.transform[5]) }));
     items.sort((a, b) => b.y - a.y || a.x - b.x);
-    let lastY = null, line = '';
+    let lastY = null, line = '', text = '';
     for (const it of items) {
       if (lastY !== null && Math.abs(it.y - lastY) > 2) { text += line + '\n'; line = ''; }
       line += (line ? ' ' : '') + it.str;
       lastY = it.y;
     }
-    text += line + '\n\f';
+    text += line;
+    pages.push({ page, text });
   }
-  return text;
+  return pages;
+}
+
+let tesseractPromise = null;
+async function loadTesseract() {
+  if (!tesseractPromise) {
+    tesseractPromise = import('./vendor/tesseract/tesseract.esm.min.js').then(({ default: Tesseract }) =>
+      Tesseract.createWorker('kor+eng', Tesseract.OEM.LSTM_ONLY, {
+        workerPath: './vendor/tesseract/worker.min.js', workerBlobURL: false,
+        corePath: './vendor/tesseract/tesseract-core-lstm.wasm.js', langPath: './vendor/tessdata',
+      }));
+  }
+  return tesseractPromise;
+}
+
+// 스캔한 이미지 페이지를 캔버스에 그린 뒤(이 브라우저 안에서만), OCR로 글자를 읽는다. 느릴 수 있음.
+async function ocrPage(page, worker, onStatus) {
+  const viewport = page.getViewport({ scale: 2 });
+  const canvas = document.createElement('canvas');
+  canvas.width = viewport.width; canvas.height = viewport.height;
+  await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+  onStatus?.();
+  const { data } = await worker.recognize(canvas);
+  return data.text;
 }
 
 function applyRecordAnalysis(result) {
   $('record-result').dataset.hasResult = 'true';
   renderRecordResult(result);
   $('record-clear').hidden = false;
+  state.record = result;
   if ($('record-keep').checked) store.set('record', result);
+}
+
+// 학생부 교과(국어/수학/영어/사회/과학)만 수시 교과 환산에 쓴다. 다른 교과(예체능 등)나 등급이 없는
+// 진로선택 과목은 자체적으로 판단해 반영하지 않고 조용히 뺀다(지어내지 않는다, docs/PRODUCT.md §5).
+const KOR_TO_SCHOOL_SUBJECT = Object.fromEntries(Object.entries(SUBJECT_LABELS).map(([key, label]) => [label, key]));
+function schoolRecordsFromGrades(grades) {
+  return grades
+    .filter(g => g.year && g.rank != null)
+    .map(g => ({ year: g.year, subject: KOR_TO_SCHOOL_SUBJECT[g.category ?? g.subject], grade: g.rank, credits: g.credit }))
+    .filter(r => r.subject);
 }
 
 $('record-file').addEventListener('change', async e => {
@@ -131,12 +170,31 @@ $('record-file').addEventListener('change', async e => {
   $('record-status').textContent = '이 브라우저에서 PDF를 읽는 중… (전송하지 않습니다)';
   $('record-result').innerHTML = '';
   try {
-    const text = await extractPdfText(file);
-    const result = analyzeRecordText(text);
+    const pages = await extractPdfPages(file);
+    const textLen = pages.reduce((sum, p) => sum + p.text.replace(/\s/g, '').length, 0);
+    const looksScanned = pages.length > 0 && textLen / pages.length < SCANNED_CHARS_PER_PAGE;
+    let text, ocr = false;
+    if (!looksScanned) {
+      text = pages.map(p => p.text).join('\n\f');
+    } else {
+      ocr = true;
+      $('record-status').textContent = `글자가 없는 스캔본으로 보여 OCR로 다시 읽습니다… (느릴 수 있어요, 0/${pages.length}쪽)`;
+      const worker = await loadTesseract();
+      const ocrTexts = [];
+      for (let i = 0; i < pages.length; i++) {
+        ocrTexts.push(await ocrPage(pages[i].page, worker, () => {
+          $('record-status').textContent = `OCR로 읽는 중… (${i + 1}/${pages.length}쪽)`;
+        }));
+      }
+      text = ocrTexts.join('\n\f');
+    }
+    const result = analyzeRecordText(text, { ocr });
     applyRecordAnalysis(result);
-    $('record-status').textContent = '분석했습니다. 자동 추출은 실수가 있을 수 있으니 원본과 함께 확인하세요.';
+    $('record-status').textContent = ocr
+      ? '스캔본을 OCR로 읽어 분석했습니다. 글자 인식 오차가 있을 수 있으니 반드시 원본과 대조하세요.'
+      : '분석했습니다. 자동 추출은 실수가 있을 수 있으니 원본과 함께 확인하세요.';
   } catch (err) {
-    $('record-status').textContent = 'PDF를 읽지 못했습니다. 스캔 이미지 PDF가 아닌, 텍스트가 있는 학생부 PDF인지 확인해 주세요.';
+    $('record-status').textContent = 'PDF를 읽지 못했습니다. 학생부 PDF 파일이 맞는지 확인해 주세요.';
   } finally {
     e.target.value = '';
   }
@@ -145,6 +203,7 @@ $('record-keep').addEventListener('change', () => { if (!$('record-keep').checke
 $('record-clear').addEventListener('click', () => {
   store.set('record', undefined);
   try { localStorage.removeItem('ipsi:record'); } catch {}
+  state.record = null;
   $('record-result').innerHTML = ''; $('record-status').textContent = '지웠습니다.';
   $('record-clear').hidden = true; $('record-file-label').textContent = '학생부 PDF 선택 (또는 여기로 끌어다 놓기)';
 });
@@ -167,8 +226,18 @@ function metricHtml(u, key, focus) {
 function renderValues() {
   $('values').innerHTML = VALUES.map(v => {
     const w = state.weights[v.id] ?? 0;
-    return `<button class="value" data-value="${v.id}" data-w="${w}" title="${esc(v.hint)}" aria-label="${esc(v.label)} 중요도 ${w}">${esc(v.label)} <span class="pips">${'●'.repeat(w)}${'○'.repeat(3 - w)}</span></button>`;
+    const { withData } = valueCoverage(state.univs, v.id);
+    const noData = withData === 0;
+    const label = noData ? `${esc(v.label)} <small>(자료 없음)</small>` : esc(v.label);
+    const title = noData ? `${v.hint} — 아직 실제 자료가 없어 순서에 반영되지 않습니다.` : v.hint;
+    return `<button class="value${noData ? ' no-data' : ''}" data-value="${v.id}" data-w="${w}" title="${esc(title)}" aria-label="${esc(v.label)} 중요도 ${w}${noData ? ', 자료 없음' : ''}">${label} <span class="pips">${'●'.repeat(w)}${'○'.repeat(3 - w)}</span></button>`;
   }).join('');
+  const missing = VALUES.filter(v => (state.weights[v.id] ?? 0) > 0 && valueCoverage(state.univs, v.id).withData === 0);
+  const notice = $('values-notice');
+  if (notice) {
+    notice.hidden = missing.length === 0;
+    notice.textContent = missing.length ? `${missing.map(v => v.label).join(', ')}: 아직 실제 자료가 없어서 이 기준은 순서에 영향을 주지 못해요. 순위를 지어내지 않기 때문에, 자료가 모이면 반영할게요.` : '';
+  }
 }
 
 function renderList() {
@@ -287,21 +356,44 @@ function renderScores(run = false) {
   store.set('scores', scores);
   $('score-results').innerHTML = ids.map(id => {
     const u = byId(id); if (!u) return '';
-    const rules = state.rules.filter(r => r.univId === id && r.kind === 'csat' && isUsableRule(r));
-    if (!rules.length) return `<section class="result"><strong>${esc(displayName(u))}</strong><p class="muted">확인된 정시 환산 방법이 아직 없습니다.</p></section>`;
-    return rules.map(r => {
+    const csatRules = state.rules.filter(r => r.univId === id && r.kind === 'csat' && isUsableRule(r));
+    const csatHtml = !csatRules.length
+      ? `<section class="result"><strong>${esc(displayName(u))} · 정시</strong><p class="muted">확인된 정시 환산 방법이 아직 없습니다.</p></section>`
+      : csatRules.map(r => {
+          let body;
+          if (!run) body = '<p class="muted">성적을 넣고 “환산하기”를 누르세요.</p>';
+          else {
+            try {
+              const out = convertCsat(r, scores);
+              body = `<p class="total">${out.total.toLocaleString('ko-KR')} <small>/ ${out.scale.toLocaleString('ko-KR')}점 기준</small></p>
+                <table><tbody>${out.lines.map(l => `<tr><th>${esc(l.label)}<small>${esc(l.basis === 'standard' ? '표준점수' : l.basis === 'percentile' ? '백분위' : l.basis)}${l.mode ? ` · ${{ add: '가산', deduct: '감산', weighted: '비율 반영' }[l.mode]}` : ''}</small></th><td>${l.points > 0 && l.mode ? '+' : ''}${l.points.toLocaleString('ko-KR')}</td></tr>`).join('')}</tbody></table>`;
+            } catch (e) { body = `<p class="err">${esc(e.message)}</p>`; }
+          }
+          return `<section class="result"><strong>${esc(displayName(u))} · ${esc(r.year)}학년도 정시 ${esc(r.track)}</strong>${body}
+            <small class="muted">출처: ${esc(r.source.name)}${r.source.url ? ` · <a href="${esc(r.source.url)}" target="_blank" rel="noopener">원문</a>` : ''}${r.page ? ` p.${esc(r.page)}` : ''} · 기준일 ${esc(r.asOf)}. 변환표준점수 등 수능 후 발표 값은 반영되지 않을 수 있습니다.</small></section>`;
+        }).join('');
+
+    const schoolRules = state.rules.filter(r => r.univId === id && r.kind === 'school' && isUsableRule(r));
+    const schoolHtml = !schoolRules.length ? '' : schoolRules.map(r => {
       let body;
-      if (!run) body = '<p class="muted">성적을 넣고 “환산하기”를 누르세요.</p>';
+      if (!state.record) body = '<p class="muted">“내 학생부” 탭에서 학생부 PDF를 넣으면 여기 자동으로 채워집니다.</p>';
       else {
-        try {
-          const out = convertCsat(r, scores);
-          body = `<p class="total">${out.total.toLocaleString('ko-KR')} <small>/ ${out.scale.toLocaleString('ko-KR')}점 기준</small></p>
-            <table><tbody>${out.lines.map(l => `<tr><th>${esc(l.label)}<small>${esc(l.basis === 'standard' ? '표준점수' : l.basis === 'percentile' ? '백분위' : l.basis)}${l.mode ? ` · ${{ add: '가산', deduct: '감산', weighted: '비율 반영' }[l.mode]}` : ''}</small></th><td>${l.points > 0 && l.mode ? '+' : ''}${l.points.toLocaleString('ko-KR')}</td></tr>`).join('')}</tbody></table>`;
-        } catch (e) { body = `<p class="err">${esc(e.message)}</p>`; }
+        const records = schoolRecordsFromGrades(state.record.grades);
+        if (!records.length) body = '<p class="muted">학생부에서 이 대학이 반영하는 교과(국어·수학·영어·사회·과학)의 등급 있는 성적을 찾지 못했습니다.</p>';
+        else {
+          try {
+            const out = convertSchool(r, records);
+            body = `<p class="total">${out.total.toLocaleString('ko-KR')} <small>/ ${out.scale.toLocaleString('ko-KR')}점 기준</small></p>
+              <table><tbody>${Object.entries(out.average).map(([y, avg]) => `<tr><th>${esc(y)}학년 평균</th><td>${esc(avg)}등급</td></tr>`).join('')}</tbody></table>
+              <p class="muted">반영 교과: ${r.subjects.map(s => esc(SUBJECT_LABELS[s] ?? s)).join('·')} · 학생부 자동 반영이라 실수가 있을 수 있어요, 원본과 대조하세요.</p>`;
+          } catch (e) { body = `<p class="err">${esc(e.message)}</p>`; }
+        }
       }
-      return `<section class="result"><strong>${esc(displayName(u))} · ${esc(r.year)}학년도 정시 ${esc(r.track)}</strong>${body}
-        <small class="muted">출처: ${esc(r.source.name)}${r.source.url ? ` · <a href="${esc(r.source.url)}" target="_blank" rel="noopener">원문</a>` : ''}${r.page ? ` p.${esc(r.page)}` : ''} · 기준일 ${esc(r.asOf)}. 변환표준점수 등 수능 후 발표 값은 반영되지 않을 수 있습니다.</small></section>`;
+      return `<section class="result"><strong>${esc(displayName(u))} · ${esc(r.year)}학년도 수시 교과</strong>${body}
+        <small class="muted">출처: ${esc(r.source.name)}${r.source.url ? ` · <a href="${esc(r.source.url)}" target="_blank" rel="noopener">원문</a>` : ''}${r.page ? ` p.${esc(r.page)}` : ''} · 기준일 ${esc(r.asOf)}.</small></section>`;
     }).join('');
+
+    return csatHtml + schoolHtml;
   }).join('');
 }
 $('score-run').onclick = () => renderScores(true);
