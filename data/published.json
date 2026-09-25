@@ -1,0 +1,733 @@
+{
+  "generatedAt": "2026-09-25T15:01:19.555Z",
+  "universities": [
+    {
+      "id": "서울대학교-본교",
+      "name": "서울대학교",
+      "campus": "본교",
+      "type": "대학교",
+      "region": "서울",
+      "city": "서울",
+      "tier": "A",
+      "homepage": "https://admission.snu.ac.kr",
+      "metrics": {},
+      "majors": []
+    },
+    {
+      "id": "성균관대학교-본교",
+      "name": "성균관대학교",
+      "campus": "본교",
+      "type": "대학교",
+      "region": "서울",
+      "city": "서울",
+      "tier": "A",
+      "homepage": "https://admission.skku.edu",
+      "metrics": {},
+      "majors": []
+    },
+    {
+      "id": "연세대학교-본교",
+      "name": "연세대학교",
+      "campus": "본교",
+      "type": "대학교",
+      "region": "서울",
+      "city": "서울",
+      "tier": "A",
+      "homepage": "https://admission.yonsei.ac.kr",
+      "metrics": {},
+      "majors": []
+    }
+  ],
+  "schedules": [
+    {
+      "kind": "원서",
+      "title": "서울대 지역균형 원서접수(인터넷)",
+      "start": "2026-09-07T10:00:00+09:00",
+      "end": "2026-09-09T18:00:00+09:00",
+      "page": 5,
+      "id": "원서-2026-09-07T10:00:00+09:00-0",
+      "univId": "서울대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.snu.ac.kr/webdata/admission/files/2027susi.pdf",
+        "sha": "aff402a9364f5f56b812f2e7ca8829b1881b88b78823e4613e90c8379eeb1a19",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "기타",
+      "title": "서울대 지역균형 서류제출(해당자, 온라인 업로드)",
+      "start": "2026-09-07T10:00:00+09:00",
+      "end": "2026-09-10T18:00:00+09:00",
+      "page": 5,
+      "id": "기타-2026-09-07T10:00:00+09:00-1",
+      "univId": "서울대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.snu.ac.kr/webdata/admission/files/2027susi.pdf",
+        "sha": "aff402a9364f5f56b812f2e7ca8829b1881b88b78823e4613e90c8379eeb1a19",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "기타",
+      "title": "서울대 지역균형 학교장 추천 확인",
+      "start": "2026-09-14T09:00:00+09:00",
+      "end": "2026-09-18T18:00:00+09:00",
+      "page": 5,
+      "id": "기타-2026-09-14T09:00:00+09:00-2",
+      "univId": "서울대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.snu.ac.kr/webdata/admission/files/2027susi.pdf",
+        "sha": "aff402a9364f5f56b812f2e7ca8829b1881b88b78823e4613e90c8379eeb1a19",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "발표",
+      "title": "서울대 지역균형 1단계 합격자 발표 (18:00 이후)",
+      "start": "2026-11-27T18:00:00+09:00",
+      "end": null,
+      "page": 5,
+      "id": "발표-2026-11-27T18:00:00+09:00-3",
+      "univId": "서울대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.snu.ac.kr/webdata/admission/files/2027susi.pdf",
+        "sha": "aff402a9364f5f56b812f2e7ca8829b1881b88b78823e4613e90c8379eeb1a19",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "기타",
+      "title": "서울대 지역균형 2단계 전형료 납부",
+      "start": "2026-11-30T10:00:00+09:00",
+      "end": "2026-12-01T18:00:00+09:00",
+      "page": 5,
+      "id": "기타-2026-11-30T10:00:00+09:00-4",
+      "univId": "서울대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.snu.ac.kr/webdata/admission/files/2027susi.pdf",
+        "sha": "aff402a9364f5f56b812f2e7ca8829b1881b88b78823e4613e90c8379eeb1a19",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "면접",
+      "title": "서울대 지역균형 면접 (수의과대학·의과대학 제외 전 모집단위)",
+      "start": "2026-12-04T00:00:00+09:00",
+      "end": null,
+      "page": 5,
+      "id": "면접-2026-12-04T00:00:00+09:00-5",
+      "univId": "서울대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.snu.ac.kr/webdata/admission/files/2027susi.pdf",
+        "sha": "aff402a9364f5f56b812f2e7ca8829b1881b88b78823e4613e90c8379eeb1a19",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "면접",
+      "title": "서울대 지역균형 면접 (수의과대학·의과대학)",
+      "start": "2026-12-05T00:00:00+09:00",
+      "end": null,
+      "page": 5,
+      "id": "면접-2026-12-05T00:00:00+09:00-6",
+      "univId": "서울대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.snu.ac.kr/webdata/admission/files/2027susi.pdf",
+        "sha": "aff402a9364f5f56b812f2e7ca8829b1881b88b78823e4613e90c8379eeb1a19",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "발표",
+      "title": "서울대 지역균형 합격자 발표 (18:00 이후)",
+      "start": "2026-12-18T18:00:00+09:00",
+      "end": null,
+      "page": 5,
+      "id": "발표-2026-12-18T18:00:00+09:00-7",
+      "univId": "서울대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.snu.ac.kr/webdata/admission/files/2027susi.pdf",
+        "sha": "aff402a9364f5f56b812f2e7ca8829b1881b88b78823e4613e90c8379eeb1a19",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "등록",
+      "title": "서울대 지역균형 합격자 등록(온라인 문서등록)",
+      "start": "2026-12-21T09:00:00+09:00",
+      "end": "2026-12-23T16:00:00+09:00",
+      "page": 5,
+      "id": "등록-2026-12-21T09:00:00+09:00-8",
+      "univId": "서울대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.snu.ac.kr/webdata/admission/files/2027susi.pdf",
+        "sha": "aff402a9364f5f56b812f2e7ca8829b1881b88b78823e4613e90c8379eeb1a19",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "발표",
+      "title": "서울대 지역균형 1차 충원 합격자 발표",
+      "start": "2026-12-24T14:00:00+09:00",
+      "end": null,
+      "page": 5,
+      "id": "발표-2026-12-24T14:00:00+09:00-9",
+      "univId": "서울대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.snu.ac.kr/webdata/admission/files/2027susi.pdf",
+        "sha": "aff402a9364f5f56b812f2e7ca8829b1881b88b78823e4613e90c8379eeb1a19",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "발표",
+      "title": "서울대 지역균형 2차 충원 합격자 발표",
+      "start": "2026-12-28T14:00:00+09:00",
+      "end": null,
+      "page": 5,
+      "id": "발표-2026-12-28T14:00:00+09:00-10",
+      "univId": "서울대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.snu.ac.kr/webdata/admission/files/2027susi.pdf",
+        "sha": "aff402a9364f5f56b812f2e7ca8829b1881b88b78823e4613e90c8379eeb1a19",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "원서",
+      "title": "서울대 일반전형 원서접수(인터넷)",
+      "start": "2026-09-07T10:00:00+09:00",
+      "end": "2026-09-09T18:00:00+09:00",
+      "page": 6,
+      "id": "원서-2026-09-07T10:00:00+09:00-11",
+      "univId": "서울대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.snu.ac.kr/webdata/admission/files/2027susi.pdf",
+        "sha": "aff402a9364f5f56b812f2e7ca8829b1881b88b78823e4613e90c8379eeb1a19",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "기타",
+      "title": "서울대 일반전형 서류제출(해당자, 온라인 업로드)",
+      "start": "2026-09-07T10:00:00+09:00",
+      "end": "2026-09-10T18:00:00+09:00",
+      "page": 6,
+      "id": "기타-2026-09-07T10:00:00+09:00-12",
+      "univId": "서울대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.snu.ac.kr/webdata/admission/files/2027susi.pdf",
+        "sha": "aff402a9364f5f56b812f2e7ca8829b1881b88b78823e4613e90c8379eeb1a19",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "발표",
+      "title": "서울대 일반전형 1단계 합격자 발표 (18:00 이후)",
+      "start": "2026-11-20T18:00:00+09:00",
+      "end": null,
+      "page": 6,
+      "id": "발표-2026-11-20T18:00:00+09:00-13",
+      "univId": "서울대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.snu.ac.kr/webdata/admission/files/2027susi.pdf",
+        "sha": "aff402a9364f5f56b812f2e7ca8829b1881b88b78823e4613e90c8379eeb1a19",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "기타",
+      "title": "서울대 일반전형 2단계 전형료 납부",
+      "start": "2026-11-23T10:00:00+09:00",
+      "end": "2026-11-24T18:00:00+09:00",
+      "page": 6,
+      "id": "기타-2026-11-23T10:00:00+09:00-14",
+      "univId": "서울대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.snu.ac.kr/webdata/admission/files/2027susi.pdf",
+        "sha": "aff402a9364f5f56b812f2e7ca8829b1881b88b78823e4613e90c8379eeb1a19",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "면접",
+      "title": "서울대 일반전형 사범대학 교직적성·인성면접",
+      "start": "2026-11-27T00:00:00+09:00",
+      "end": null,
+      "page": 6,
+      "id": "면접-2026-11-27T00:00:00+09:00-15",
+      "univId": "서울대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.snu.ac.kr/webdata/admission/files/2027susi.pdf",
+        "sha": "aff402a9364f5f56b812f2e7ca8829b1881b88b78823e4613e90c8379eeb1a19",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "면접",
+      "title": "서울대 일반전형 면접 및 구술고사 (수의과대학·의과대학·치의학대학원 치의학과 제외 전 모집단위)",
+      "start": "2026-11-27T00:00:00+09:00",
+      "end": null,
+      "page": 6,
+      "id": "면접-2026-11-27T00:00:00+09:00-16",
+      "univId": "서울대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.snu.ac.kr/webdata/admission/files/2027susi.pdf",
+        "sha": "aff402a9364f5f56b812f2e7ca8829b1881b88b78823e4613e90c8379eeb1a19",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "면접",
+      "title": "서울대 일반전형 면접 및 구술고사 (수의과대학·의과대학·치의학대학원 치의학과)",
+      "start": "2026-11-28T00:00:00+09:00",
+      "end": null,
+      "page": 6,
+      "id": "면접-2026-11-28T00:00:00+09:00-17",
+      "univId": "서울대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.snu.ac.kr/webdata/admission/files/2027susi.pdf",
+        "sha": "aff402a9364f5f56b812f2e7ca8829b1881b88b78823e4613e90c8379eeb1a19",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "발표",
+      "title": "서울대 일반전형 합격자 발표 (18:00 이후)",
+      "start": "2026-12-18T18:00:00+09:00",
+      "end": null,
+      "page": 6,
+      "id": "발표-2026-12-18T18:00:00+09:00-18",
+      "univId": "서울대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.snu.ac.kr/webdata/admission/files/2027susi.pdf",
+        "sha": "aff402a9364f5f56b812f2e7ca8829b1881b88b78823e4613e90c8379eeb1a19",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "등록",
+      "title": "서울대 일반전형 합격자 등록(온라인 문서등록)",
+      "start": "2026-12-21T09:00:00+09:00",
+      "end": "2026-12-23T16:00:00+09:00",
+      "page": 6,
+      "id": "등록-2026-12-21T09:00:00+09:00-19",
+      "univId": "서울대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.snu.ac.kr/webdata/admission/files/2027susi.pdf",
+        "sha": "aff402a9364f5f56b812f2e7ca8829b1881b88b78823e4613e90c8379eeb1a19",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "발표",
+      "title": "서울대 일반전형 1차 충원 합격자 발표",
+      "start": "2026-12-24T14:00:00+09:00",
+      "end": null,
+      "page": 6,
+      "id": "발표-2026-12-24T14:00:00+09:00-20",
+      "univId": "서울대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.snu.ac.kr/webdata/admission/files/2027susi.pdf",
+        "sha": "aff402a9364f5f56b812f2e7ca8829b1881b88b78823e4613e90c8379eeb1a19",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "발표",
+      "title": "서울대 일반전형 2차 충원 합격자 발표",
+      "start": "2026-12-28T14:00:00+09:00",
+      "end": null,
+      "page": 6,
+      "id": "발표-2026-12-28T14:00:00+09:00-21",
+      "univId": "서울대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.snu.ac.kr/webdata/admission/files/2027susi.pdf",
+        "sha": "aff402a9364f5f56b812f2e7ca8829b1881b88b78823e4613e90c8379eeb1a19",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "원서",
+      "title": "성균관대 수시 원서접수(전 전형)",
+      "start": "2026-09-08T10:00:00+09:00",
+      "end": "2026-09-11T18:00:00+09:00",
+      "page": 10,
+      "id": "원서-2026-09-08T10:00:00+09:00-0",
+      "univId": "성균관대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.skku.edu/common/download.php?fpath=guide/20260813104526BBPE44.pdf&fname=%5B%EC%84%B1%EA%B7%A0%EA%B4%80%EB%8C%80%ED%95%99%EA%B5%90%5D+2027%ED%95%99%EB%85%84%EB%8F%84+%EC%88%98%EC%8B%9C+%EB%AA%A8%EC%A7%91%EC%9A%94%EA%B0%95.pdf",
+        "sha": "aff51aaccbb5eea408c2a854702f4e8e2b8f98fa49cf734c2f56dc21a3894486",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "기타",
+      "title": "성균관대 서류 제출·온라인 입력(해당자)",
+      "start": "2026-09-08T10:00:00+09:00",
+      "end": "2026-09-12T14:00:00+09:00",
+      "page": 10,
+      "id": "기타-2026-09-08T10:00:00+09:00-1",
+      "univId": "성균관대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.skku.edu/common/download.php?fpath=guide/20260813104526BBPE44.pdf&fname=%5B%EC%84%B1%EA%B7%A0%EA%B4%80%EB%8C%80%ED%95%99%EA%B5%90%5D+2027%ED%95%99%EB%85%84%EB%8F%84+%EC%88%98%EC%8B%9C+%EB%AA%A8%EC%A7%91%EC%9A%94%EA%B0%95.pdf",
+        "sha": "aff51aaccbb5eea408c2a854702f4e8e2b8f98fa49cf734c2f56dc21a3894486",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "기타",
+      "title": "성균관대 학생부교과(추천인재) 추천대상자 입력",
+      "start": "2026-09-14T00:00:00+09:00",
+      "end": "2026-09-18T23:59:00+09:00",
+      "page": 10,
+      "id": "기타-2026-09-14T00:00:00+09:00-2",
+      "univId": "성균관대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.skku.edu/common/download.php?fpath=guide/20260813104526BBPE44.pdf&fname=%5B%EC%84%B1%EA%B7%A0%EA%B4%80%EB%8C%80%ED%95%99%EA%B5%90%5D+2027%ED%95%99%EB%85%84%EB%8F%84+%EC%88%98%EC%8B%9C+%EB%AA%A8%EC%A7%91%EC%9A%94%EA%B0%95.pdf",
+        "sha": "aff51aaccbb5eea408c2a854702f4e8e2b8f98fa49cf734c2f56dc21a3894486",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "발표",
+      "title": "성균관대 수시 최초합격자 발표 (12.18. 이전)",
+      "start": "2026-12-18T00:00:00+09:00",
+      "end": null,
+      "page": 11,
+      "id": "발표-2026-12-18T00:00:00+09:00-3",
+      "univId": "성균관대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.skku.edu/common/download.php?fpath=guide/20260813104526BBPE44.pdf&fname=%5B%EC%84%B1%EA%B7%A0%EA%B4%80%EB%8C%80%ED%95%99%EA%B5%90%5D+2027%ED%95%99%EB%85%84%EB%8F%84+%EC%88%98%EC%8B%9C+%EB%AA%A8%EC%A7%91%EC%9A%94%EA%B0%95.pdf",
+        "sha": "aff51aaccbb5eea408c2a854702f4e8e2b8f98fa49cf734c2f56dc21a3894486",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "등록",
+      "title": "성균관대 최초합격자 등록(온라인 문서등록)",
+      "start": "2026-12-21T10:00:00+09:00",
+      "end": "2026-12-23T16:00:00+09:00",
+      "page": 11,
+      "id": "등록-2026-12-21T10:00:00+09:00-4",
+      "univId": "성균관대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.skku.edu/common/download.php?fpath=guide/20260813104526BBPE44.pdf&fname=%5B%EC%84%B1%EA%B7%A0%EA%B4%80%EB%8C%80%ED%95%99%EA%B5%90%5D+2027%ED%95%99%EB%85%84%EB%8F%84+%EC%88%98%EC%8B%9C+%EB%AA%A8%EC%A7%91%EC%9A%94%EA%B0%95.pdf",
+        "sha": "aff51aaccbb5eea408c2a854702f4e8e2b8f98fa49cf734c2f56dc21a3894486",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "발표",
+      "title": "성균관대 추가합격자 발표",
+      "start": "2026-12-24T00:00:00+09:00",
+      "end": "2026-12-29T18:00:00+09:00",
+      "page": 11,
+      "id": "발표-2026-12-24T00:00:00+09:00-5",
+      "univId": "성균관대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.skku.edu/common/download.php?fpath=guide/20260813104526BBPE44.pdf&fname=%5B%EC%84%B1%EA%B7%A0%EA%B4%80%EB%8C%80%ED%95%99%EA%B5%90%5D+2027%ED%95%99%EB%85%84%EB%8F%84+%EC%88%98%EC%8B%9C+%EB%AA%A8%EC%A7%91%EC%9A%94%EA%B0%95.pdf",
+        "sha": "aff51aaccbb5eea408c2a854702f4e8e2b8f98fa49cf734c2f56dc21a3894486",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "등록",
+      "title": "성균관대 합격자 최종등록(등록금 납부)",
+      "start": "2027-02-10T00:00:00+09:00",
+      "end": "2027-02-12T16:00:00+09:00",
+      "page": 11,
+      "id": "등록-2027-02-10T00:00:00+09:00-6",
+      "univId": "성균관대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.skku.edu/common/download.php?fpath=guide/20260813104526BBPE44.pdf&fname=%5B%EC%84%B1%EA%B7%A0%EA%B4%80%EB%8C%80%ED%95%99%EA%B5%90%5D+2027%ED%95%99%EB%85%84%EB%8F%84+%EC%88%98%EC%8B%9C+%EB%AA%A8%EC%A7%91%EC%9A%94%EA%B0%95.pdf",
+        "sha": "aff51aaccbb5eea408c2a854702f4e8e2b8f98fa49cf734c2f56dc21a3894486",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "원서",
+      "title": "연세대(서울) 수시 원서접수(인터넷, 전 전형)",
+      "start": "2026-09-07T10:00:00+09:00",
+      "end": "2026-09-09T17:00:00+09:00",
+      "page": 19,
+      "id": "원서-2026-09-07T10:00:00+09:00-0",
+      "univId": "연세대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.yonsei.ac.kr/seoul/upload/guide/20260529204109T8NZNJ.PDF",
+        "sha": "a41b14f17a7f535f833be238629a50cda23116608f93d13bbe0dd01ba622102b",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "논술",
+      "title": "연세대 논술전형 논술시험",
+      "start": "2026-10-10T00:00:00+09:00",
+      "end": null,
+      "page": 19,
+      "id": "논술-2026-10-10T00:00:00+09:00-1",
+      "univId": "연세대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.yonsei.ac.kr/seoul/upload/guide/20260529204109T8NZNJ.PDF",
+        "sha": "a41b14f17a7f535f833be238629a50cda23116608f93d13bbe0dd01ba622102b",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "발표",
+      "title": "연세대 국제인재·기회균형·체육인재 1단계 합격자 발표",
+      "start": "2026-10-26T00:00:00+09:00",
+      "end": null,
+      "page": 19,
+      "id": "발표-2026-10-26T00:00:00+09:00-2",
+      "univId": "연세대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.yonsei.ac.kr/seoul/upload/guide/20260529204109T8NZNJ.PDF",
+        "sha": "a41b14f17a7f535f833be238629a50cda23116608f93d13bbe0dd01ba622102b",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "실기",
+      "title": "연세대 특기자전형(체육인재) 2단계 시험",
+      "start": "2026-10-31T00:00:00+09:00",
+      "end": null,
+      "page": 19,
+      "id": "실기-2026-10-31T00:00:00+09:00-3",
+      "univId": "연세대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.yonsei.ac.kr/seoul/upload/guide/20260529204109T8NZNJ.PDF",
+        "sha": "a41b14f17a7f535f833be238629a50cda23116608f93d13bbe0dd01ba622102b",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "면접",
+      "title": "연세대 국제인재·기회균형 2단계 시험(면접)",
+      "start": "2026-11-01T00:00:00+09:00",
+      "end": null,
+      "page": 19,
+      "id": "면접-2026-11-01T00:00:00+09:00-4",
+      "univId": "연세대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.yonsei.ac.kr/seoul/upload/guide/20260529204109T8NZNJ.PDF",
+        "sha": "a41b14f17a7f535f833be238629a50cda23116608f93d13bbe0dd01ba622102b",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "발표",
+      "title": "연세대 활동우수형(인문·통합) 1단계 합격자 발표",
+      "start": "2026-11-16T00:00:00+09:00",
+      "end": null,
+      "page": 19,
+      "id": "발표-2026-11-16T00:00:00+09:00-5",
+      "univId": "연세대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.yonsei.ac.kr/seoul/upload/guide/20260529204109T8NZNJ.PDF",
+        "sha": "a41b14f17a7f535f833be238629a50cda23116608f93d13bbe0dd01ba622102b",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "면접",
+      "title": "연세대 활동우수형(인문·통합) 2단계 시험(면접)",
+      "start": "2026-11-21T00:00:00+09:00",
+      "end": null,
+      "page": 19,
+      "id": "면접-2026-11-21T00:00:00+09:00-6",
+      "univId": "연세대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.yonsei.ac.kr/seoul/upload/guide/20260529204109T8NZNJ.PDF",
+        "sha": "a41b14f17a7f535f833be238629a50cda23116608f93d13bbe0dd01ba622102b",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "면접",
+      "title": "연세대 활동우수형(자연) 2단계 시험(면접)",
+      "start": "2026-11-22T00:00:00+09:00",
+      "end": null,
+      "page": 19,
+      "id": "면접-2026-11-22T00:00:00+09:00-7",
+      "univId": "연세대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.yonsei.ac.kr/seoul/upload/guide/20260529204109T8NZNJ.PDF",
+        "sha": "a41b14f17a7f535f833be238629a50cda23116608f93d13bbe0dd01ba622102b",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "발표",
+      "title": "연세대 국제형(국내고·해외고/검정고시) 1단계 합격자 발표",
+      "start": "2026-11-23T00:00:00+09:00",
+      "end": null,
+      "page": 19,
+      "id": "발표-2026-11-23T00:00:00+09:00-8",
+      "univId": "연세대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.yonsei.ac.kr/seoul/upload/guide/20260529204109T8NZNJ.PDF",
+        "sha": "a41b14f17a7f535f833be238629a50cda23116608f93d13bbe0dd01ba622102b",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "면접",
+      "title": "연세대 국제형(국내고·해외고/검정고시) 2단계 시험(면접)",
+      "start": "2026-11-29T00:00:00+09:00",
+      "end": null,
+      "page": 19,
+      "id": "면접-2026-11-29T00:00:00+09:00-9",
+      "univId": "연세대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.yonsei.ac.kr/seoul/upload/guide/20260529204109T8NZNJ.PDF",
+        "sha": "a41b14f17a7f535f833be238629a50cda23116608f93d13bbe0dd01ba622102b",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "발표",
+      "title": "연세대 수시 최초 합격자 발표 (전 전형)",
+      "start": "2026-12-18T18:00:00+09:00",
+      "end": null,
+      "page": 20,
+      "id": "발표-2026-12-18T18:00:00+09:00-10",
+      "univId": "연세대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.yonsei.ac.kr/seoul/upload/guide/20260529204109T8NZNJ.PDF",
+        "sha": "a41b14f17a7f535f833be238629a50cda23116608f93d13bbe0dd01ba622102b",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "등록",
+      "title": "연세대 최초 합격자 등록(문서등록)",
+      "start": "2026-12-21T10:00:00+09:00",
+      "end": "2026-12-23T14:00:00+09:00",
+      "page": 20,
+      "id": "등록-2026-12-21T10:00:00+09:00-11",
+      "univId": "연세대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.yonsei.ac.kr/seoul/upload/guide/20260529204109T8NZNJ.PDF",
+        "sha": "a41b14f17a7f535f833be238629a50cda23116608f93d13bbe0dd01ba622102b",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "발표",
+      "title": "연세대 1차 충원 합격자 발표 (20:00 이전)",
+      "start": "2026-12-23T00:00:00+09:00",
+      "end": null,
+      "page": 20,
+      "id": "발표-2026-12-23T00:00:00+09:00-12",
+      "univId": "연세대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.yonsei.ac.kr/seoul/upload/guide/20260529204109T8NZNJ.PDF",
+        "sha": "a41b14f17a7f535f833be238629a50cda23116608f93d13bbe0dd01ba622102b",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    },
+    {
+      "kind": "등록",
+      "title": "연세대 최종 등록(등록금 납부, 본등록)",
+      "start": "2027-02-10T00:00:00+09:00",
+      "end": "2027-02-12T16:00:00+09:00",
+      "page": 20,
+      "id": "등록-2027-02-10T00:00:00+09:00-13",
+      "univId": "연세대학교-본교",
+      "source": {
+        "name": "모집요강",
+        "url": "https://admission.yonsei.ac.kr/seoul/upload/guide/20260529204109T8NZNJ.PDF",
+        "sha": "a41b14f17a7f535f833be238629a50cda23116608f93d13bbe0dd01ba622102b",
+        "reviewedBy": "Claude(사용자 위임 2026-09-26)"
+      },
+      "asOf": "2026-09-25"
+    }
+  ],
+  "scoreRules": [],
+  "examQuestions": []
+}
