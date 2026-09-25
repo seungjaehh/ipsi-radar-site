@@ -1,13 +1,13 @@
-import { VALUES, METRIC_LABELS, eligible, search, orderByValues, compareRows, metricOf, displayName, isBranch, fourYearCost, valueCoverage } from './src/lib/explore.js?v=muh5cgtx';
-import { toIcs, isVerified, isAllDay } from './src/lib/ics.js?v=muh5cgtx';
-import { CRITERIA, IDEAL_SECONDS, offlineFeedback } from './src/lib/interview.js?v=muh5cgtx';
-import { SAMPLE_UNIVERSITIES } from './src/data/universities.js?v=muh5cgtx';
-import { SAMPLE_SCHEDULES } from './src/data/schedules.js?v=muh5cgtx';
-import { FIELDS, KINDS, questionsFor } from './src/data/questions.js?v=muh5cgtx';
-import { convertCsat, convertSchool, isUsableRule, SUBJECT_LABELS } from './src/lib/score.js?v=muh5cgtx';
-import { SAMPLE_SCORE_RULES } from './src/data/score-rules.js?v=muh5cgtx';
-import { SAMPLE_EXAM_QUESTIONS } from './src/data/exam-questions.js?v=muh5cgtx';
-import { analyzeRecordText } from './src/lib/record-parse.js?v=muh5cgtx';
+import { VALUES, METRIC_LABELS, eligible, search, orderByValues, compareRows, metricOf, displayName, isBranch, fourYearCost, valueCoverage } from './src/lib/explore.js?v=muh5oa1j';
+import { toIcs, isVerified, isAllDay } from './src/lib/ics.js?v=muh5oa1j';
+import { CRITERIA, IDEAL_SECONDS, offlineFeedback } from './src/lib/interview.js?v=muh5oa1j';
+import { SAMPLE_UNIVERSITIES } from './src/data/universities.js?v=muh5oa1j';
+import { SAMPLE_SCHEDULES } from './src/data/schedules.js?v=muh5oa1j';
+import { FIELDS, KINDS, questionsFor } from './src/data/questions.js?v=muh5oa1j';
+import { convertCsat, convertSchool, isUsableRule, SUBJECT_LABELS } from './src/lib/score.js?v=muh5oa1j';
+import { SAMPLE_SCORE_RULES } from './src/data/score-rules.js?v=muh5oa1j';
+import { SAMPLE_EXAM_QUESTIONS } from './src/data/exam-questions.js?v=muh5oa1j';
+import { analyzeRecordText } from './src/lib/record-parse.js?v=muh5oa1j';
 
 const $ = id => document.getElementById(id);
 const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
