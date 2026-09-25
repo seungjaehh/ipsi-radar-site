@@ -100,3 +100,27 @@ fieldset label{display:grid;gap:4px;font-size:.85rem;color:var(--muted)}
 .exams summary{cursor:pointer;font-weight:600}
 .exams ul{margin:8px 0 0;padding-left:18px;display:grid;gap:8px}
 .exams li small{display:block;color:var(--muted)}.tag.real{background:var(--accent-soft);color:var(--accent);border-color:transparent;font-weight:600}
+
+/* 학생부 분석 탭 */
+.privacy-box{background:var(--accent-soft);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;font-size:.85rem}
+.privacy-box strong{display:block;margin-bottom:6px;color:var(--accent)}
+.privacy-box ul{margin:0;padding-left:18px;display:grid;gap:4px;color:var(--ink)}
+.record-upload{display:grid;gap:10px}
+.record-drop{position:relative;display:flex;align-items:center;justify-content:center;min-height:80px;border:2px dashed var(--line);border-radius:var(--radius);background:var(--surface);text-align:center;padding:16px;cursor:pointer;color:var(--muted)}
+.record-drop:hover{border-color:var(--accent)}
+.record-drop input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%}
+.record-summary{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.record-stat{flex:1;min-width:110px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:12px;text-align:center}
+.record-stat strong{display:block;font-size:1.3rem}
+.record-stat small{color:var(--muted);font-size:.75rem}
+.record-section-title{margin:18px 0 8px;font-size:1rem}
+.record-block{margin-bottom:14px}
+.record-block h3{font-size:.85rem;color:var(--muted);margin:0 0 6px}
+.record-table{width:100%;border-collapse:collapse;font-size:.9rem}
+.record-table th,.record-table td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}
+.record-table th small{display:block;color:var(--muted);font-size:.72rem}
+.record-table td.good{color:var(--good);font-weight:600}
+.record-table td.warn{color:var(--warn);font-weight:600}
+.record-warnings{background:var(--warn-soft);color:var(--warn);border-radius:var(--radius);padding:12px 14px;margin:12px 0;font-size:.85rem}
+.record-warnings strong{display:block;margin-bottom:4px}
+.record-warnings ul{margin:0;padding-left:18px}

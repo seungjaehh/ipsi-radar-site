@@ -1,12 +1,13 @@
-import { VALUES, METRIC_LABELS, eligible, search, orderByValues, compareRows, metricOf, displayName, isBranch, fourYearCost } from './src/lib/explore.js?v=muh3fqur';
-import { toIcs, isVerified, isAllDay } from './src/lib/ics.js?v=muh3fqur';
-import { CRITERIA, IDEAL_SECONDS, offlineFeedback } from './src/lib/interview.js?v=muh3fqur';
-import { SAMPLE_UNIVERSITIES } from './src/data/universities.js?v=muh3fqur';
-import { SAMPLE_SCHEDULES } from './src/data/schedules.js?v=muh3fqur';
-import { FIELDS, KINDS, questionsFor } from './src/data/questions.js?v=muh3fqur';
-import { convertCsat, isUsableRule } from './src/lib/score.js?v=muh3fqur';
-import { SAMPLE_SCORE_RULES } from './src/data/score-rules.js?v=muh3fqur';
-import { SAMPLE_EXAM_QUESTIONS } from './src/data/exam-questions.js?v=muh3fqur';
+import { VALUES, METRIC_LABELS, eligible, search, orderByValues, compareRows, metricOf, displayName, isBranch, fourYearCost } from './src/lib/explore.js?v=muh4blte';
+import { toIcs, isVerified, isAllDay } from './src/lib/ics.js?v=muh4blte';
+import { CRITERIA, IDEAL_SECONDS, offlineFeedback } from './src/lib/interview.js?v=muh4blte';
+import { SAMPLE_UNIVERSITIES } from './src/data/universities.js?v=muh4blte';
+import { SAMPLE_SCHEDULES } from './src/data/schedules.js?v=muh4blte';
+import { FIELDS, KINDS, questionsFor } from './src/data/questions.js?v=muh4blte';
+import { convertCsat, isUsableRule } from './src/lib/score.js?v=muh4blte';
+import { SAMPLE_SCORE_RULES } from './src/data/score-rules.js?v=muh4blte';
+import { SAMPLE_EXAM_QUESTIONS } from './src/data/exam-questions.js?v=muh4blte';
+import { analyzeRecordText } from './src/lib/record-parse.js?v=muh4blte';
 
 const $ = id => document.getElementById(id);
 const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -40,6 +41,121 @@ function showTab(name) {
   if (name === 'interview') renderExams();
 }
 document.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => showTab(b.dataset.tab));
+
+// ---------- 학생부(생기부) 분석 — 파일은 이 탭 밖으로 절대 나가지 않음(fetch/전송 없음, pdf.js로 이 브라우저에서만 읽음)
+const TIER_LABEL = { A: '심층', B: '표준', C: '기본' };
+function achColor(rank) { return rank ? (rank <= 2 ? 'good' : rank >= 7 ? 'warn' : '') : ''; }
+function renderRecordResult(r) {
+  const byYearSem = {};
+  for (const g of r.grades) (byYearSem[`${g.year ?? '?'}학년 ${g.semester ?? ''}학기`] ??= []).push(g);
+  const gradeHtml = Object.entries(byYearSem).map(([label, list]) => `
+    <div class="record-block"><h3>${esc(label)}</h3><table class="record-table"><tbody>
+      ${list.map(g => `<tr><th>${esc(g.subject)}${g.category ? `<small>${esc(g.category)}</small>` : ''}</th><td>${esc(g.rawScore)}점 (평균 ${esc(g.classAvg)})</td><td>${esc(g.achievement)}</td><td class="${achColor(g.rank)}">${g.rank ? `${g.rank}등급` : '등급 없음'}</td></tr>`).join('')}
+    </tbody></table></div>`).join('') || '<p class="empty">성적 표를 찾지 못했습니다.</p>';
+
+  const s = r.summary;
+  const trendLabel = { improving: '올라가는 추세', declining: '내려가는 추세', flat: '비슷한 추세', unknown: '추세 판단 불가(자료 부족)' }[s.trend];
+  const yearRows = Object.entries(s.yearAvg).map(([y, avg]) => `<tr><th>${esc(y)}학년 평균</th><td>${esc(avg)}등급</td></tr>`).join('');
+
+  const attendHtml = r.attendance.found
+    ? `<table class="record-table"><tbody>${r.attendance.years.map(y => `<tr><th>${esc(y.year)}학년</th><td>수업일수 ${esc(y.classDays)}일</td><td>${y.perfectAttendance ? '개근' : '결석·지각 있음(정확한 수는 원본 확인)'}</td></tr>`).join('')}</tbody></table>`
+    : '<p class="empty">출결 정보를 찾지 못했습니다.</p>';
+
+  const awardsHtml = r.awards.length
+    ? `<ul>${r.awards.map(a => `<li>${esc(a.date)} — ${a.title ? esc(a.title) : '(이름 확인 필요)'}</li>`).join('')}</ul>`
+    : '<p class="empty">수상 내역을 찾지 못했습니다.</p>';
+
+  $('record-result').innerHTML = `
+    <section class="record-summary">
+      <div class="record-stat"><strong>${s.overall ?? '—'}</strong><small>전체 평균 등급</small></div>
+      <div class="record-stat"><strong>${s.subjectCount}</strong><small>과목 수</small></div>
+      <div class="record-stat"><strong>${esc(trendLabel)}</strong><small>학년별 등급 추세</small></div>
+      ${r.serviceHours != null ? `<div class="record-stat"><strong>${esc(r.serviceHours)}</strong><small>봉사시간(추정, 원본 확인)</small></div>` : ''}
+    </section>
+    ${yearRows ? `<table class="record-table"><tbody>${yearRows}</tbody></table>` : ''}
+    ${r.warnings.length ? `<div class="record-warnings"><strong>확인이 필요해요</strong><ul>${r.warnings.map(w => `<li>${esc(w)}</li>`).join('')}</ul></div>` : ''}
+    <h3 class="record-section-title">학기별 성적</h3>
+    ${gradeHtml}
+    <h3 class="record-section-title">출결</h3>
+    ${attendHtml}
+    <h3 class="record-section-title">수상 (이름과 날짜가 정확히 안 맞을 수 있어요)</h3>
+    ${awardsHtml}
+  `;
+}
+
+let pdfjsLibPromise = null;
+async function loadPdfJs() {
+  if (!pdfjsLibPromise) {
+    pdfjsLibPromise = import('./vendor/pdfjs/pdf.min.mjs').then(lib => {
+      lib.GlobalWorkerOptions.workerSrc = './vendor/pdfjs/pdf.worker.min.mjs';
+      return lib;
+    });
+  }
+  return pdfjsLibPromise;
+}
+
+async function extractPdfText(file) {
+  const pdfjsLib = await loadPdfJs();
+  const buf = await file.arrayBuffer();
+  const doc = await pdfjsLib.getDocument({ data: buf }).promise;
+  let text = '';
+  for (let i = 1; i <= doc.numPages; i++) {
+    const page = await doc.getPage(i);
+    const content = await page.getTextContent();
+    // pdf.js gives text items with x/y position; sort roughly top-to-bottom, left-to-right per line
+    // like pdftotext -layout does, so our row-based regex sees the same shape.
+    const items = content.items.map(it => ({ str: it.str, x: it.transform[4], y: Math.round(it.transform[5]) }));
+    items.sort((a, b) => b.y - a.y || a.x - b.x);
+    let lastY = null, line = '';
+    for (const it of items) {
+      if (lastY !== null && Math.abs(it.y - lastY) > 2) { text += line + '\n'; line = ''; }
+      line += (line ? ' ' : '') + it.str;
+      lastY = it.y;
+    }
+    text += line + '\n\f';
+  }
+  return text;
+}
+
+function applyRecordAnalysis(result) {
+  $('record-result').dataset.hasResult = 'true';
+  renderRecordResult(result);
+  $('record-clear').hidden = false;
+  if ($('record-keep').checked) store.set('record', result);
+}
+
+$('record-file').addEventListener('change', async e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  $('record-file-label').textContent = file.name;
+  $('record-status').textContent = '이 브라우저에서 PDF를 읽는 중… (전송하지 않습니다)';
+  $('record-result').innerHTML = '';
+  try {
+    const text = await extractPdfText(file);
+    const result = analyzeRecordText(text);
+    applyRecordAnalysis(result);
+    $('record-status').textContent = '분석했습니다. 자동 추출은 실수가 있을 수 있으니 원본과 함께 확인하세요.';
+  } catch (err) {
+    $('record-status').textContent = 'PDF를 읽지 못했습니다. 스캔 이미지 PDF가 아닌, 텍스트가 있는 학생부 PDF인지 확인해 주세요.';
+  } finally {
+    e.target.value = '';
+  }
+});
+$('record-keep').addEventListener('change', () => { if (!$('record-keep').checked) store.set('record', undefined); });
+$('record-clear').addEventListener('click', () => {
+  store.set('record', undefined);
+  try { localStorage.removeItem('ipsi:record'); } catch {}
+  $('record-result').innerHTML = ''; $('record-status').textContent = '지웠습니다.';
+  $('record-clear').hidden = true; $('record-file-label').textContent = '학생부 PDF 선택 (또는 여기로 끌어다 놓기)';
+});
+['dragover', 'dragleave', 'drop'].forEach(evt => $('record-file').closest('.record-drop').addEventListener(evt, e => {
+  e.preventDefault();
+  if (evt === 'drop' && e.dataTransfer.files[0]) { $('record-file').files = e.dataTransfer.files; $('record-file').dispatchEvent(new Event('change')); }
+}));
+{
+  const saved = store.get('record', null);
+  if (saved) { $('record-keep').checked = true; applyRecordAnalysis(saved); $('record-status').textContent = '이 기기에 저장된 지난 분석 결과입니다.'; }
+}
 
 // ---------- explore
 function metricHtml(u, key, focus) {
